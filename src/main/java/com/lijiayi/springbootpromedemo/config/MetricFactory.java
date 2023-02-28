@@ -34,7 +34,7 @@ public class MetricFactory {
         return Counter.build()
                 .name("lijiayi_http_request_counter_testSave")
                 .labelNames(inactiveFrameworkLabels)
-                .help("在接口层面记录交易次数，用于计算交易成功率")
+                .help("在接口层面记录交易次数，用于计算交易成功率 ")
                 .register();
     }
 
