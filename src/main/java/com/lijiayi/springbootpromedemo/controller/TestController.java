@@ -1,7 +1,6 @@
 package com.lijiayi.springbootpromedemo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.lijiayi.springbootpromedemo.metrics.PushGauge;
 import com.lijiayi.springbootpromedemo.metrics.PushHistogram;
 import com.lijiayi.springbootpromedemo.metrics.PushSummary;
 import com.lijiayi.springbootpromedemo.service.impl.TestServiceImpl;
@@ -25,8 +24,8 @@ public class TestController {
     @Autowired
     PushSummary pushSummary;
 
-    @Autowired
-    PushGauge pushGauge;
+//    @Autowired
+//    PushGauge pushGauge;
 
     // 测试采集
     @ResponseBody
@@ -44,8 +43,9 @@ public class TestController {
             jsonObject.put("result", "hello word!");
         }
 //        pushHistogram.histogram(center);
-        pushSummary.summary(center);
-        pushGauge.gauge(center);
+//        pushSummary.summary();
+        pushHistogram.histogram();
+//        pushGauge.gauge(center);
         return JSONObject.toJSONString(jsonObject);
     }
 

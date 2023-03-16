@@ -3,9 +3,8 @@ package com.lijiayi.springbootpromedemo.metrics;
 import com.lijiayi.springbootpromedemo.schedule.SendToPushGatewayTask;
 import io.prometheus.client.Counter;
 import io.prometheus.client.Gauge;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class PushResponseAvgTimer {
 
     private static Counter requestTotalTimeCounter = Counter.build()

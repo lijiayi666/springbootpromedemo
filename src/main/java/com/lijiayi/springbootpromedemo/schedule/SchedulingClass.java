@@ -7,7 +7,6 @@ import com.lijiayi.springbootpromedemo.entity.PromResultInfo;
 import com.lijiayi.springbootpromedemo.util.PromInfoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -15,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
-@Component
+//@Component
 public class SchedulingClass {
 
     // 报警阈值一分钟

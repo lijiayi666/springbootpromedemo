@@ -3,9 +3,8 @@ package com.lijiayi.springbootpromedemo.metrics;
 import com.lijiayi.springbootpromedemo.schedule.SendToPushGatewayTask;
 import io.prometheus.client.Gauge;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @Slf4j
 public class PushResponseMaxTimer {
 

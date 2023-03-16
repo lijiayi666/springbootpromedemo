@@ -2,9 +2,8 @@ package com.lijiayi.springbootpromedemo.metrics;
 
 import com.lijiayi.springbootpromedemo.schedule.SendToPushGatewayTask;
 import io.prometheus.client.Counter;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class PushRequestCounter {
 
     public static Counter requestTimesCounter = Counter.build()
