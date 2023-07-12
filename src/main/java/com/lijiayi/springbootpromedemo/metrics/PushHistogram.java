@@ -1,6 +1,6 @@
 package com.lijiayi.springbootpromedemo.metrics;
 
-import com.lijiayi.springbootpromedemo.schedule.SendToPushGatewayTask;
+import com.lijiayi.springbootpromedemo.controller.TestController;
 import io.prometheus.client.Histogram;
 import org.springframework.stereotype.Component;
 
@@ -12,16 +12,17 @@ public class PushHistogram {
 
 
     public static Histogram histogram = Histogram.build()
-            .buckets(10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95)
-            .name("lijiayi_test_histogram_0303")
+//            .buckets(10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95)
+            .buckets(10, 50, 80,95)
+            .name("lijiayi_test_histogram_0322")
             .help("histogram of bulk sizes to correlate with duration lijiayi666")
             .labelNames("url", "ip", "serverName")
-            .register(SendToPushGatewayTask.COLLECTOR_REGISTRY);
+            .register(TestController.COLLECTOR_REGISTRY);
 
     public void histogram() {
         Random random = new Random();
         int i = random.nextInt(100);
-        if (i > 30 && i <= 70) {
+        /*if (i > 30 && i <= 70) {
             histogram.labels("/test001", "192.168.129.666", "testServer001").observe(i);
         } else if (i > 70 && i <= 90){
             histogram.labels("/test002", "192.168.129.666", "testServer001").observe(i);
@@ -29,7 +30,8 @@ public class PushHistogram {
             histogram.labels("/test002", "192.168.129.666", "testServer002").observe(i);
         } else {
             histogram.labels("/test001", "192.168.129.666", "testServer002").observe(i);
-        }
+        }*/
+        histogram.labels("/test001", "192.168.129.666", "testServer002").observe(i);
     }
 
     public void batchAdd(Integer count, Integer rt) {
