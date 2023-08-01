@@ -1,4 +1,4 @@
-package com.lijiayi.springbootpromedemo.entity;
+package com.lijiayi.springbootpromedemo.event;
 
 import org.springframework.context.ApplicationEvent;
 

@@ -1,6 +1,6 @@
 package com.lijiayi.springbootpromedemo.service.impl;
 
-import com.lijiayi.springbootpromedemo.entity.MyListenerEvent;
+import com.lijiayi.springbootpromedemo.event.MyListenerEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 

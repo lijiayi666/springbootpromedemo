@@ -1,7 +1,8 @@
 package com.lijiayi.springbootpromedemo.controller;
 
+import com.alibaba.arthas.spring.ArthasProperties;
 import com.alibaba.fastjson.JSONObject;
-import com.lijiayi.springbootpromedemo.entity.MyListenerEvent;
+import com.lijiayi.springbootpromedemo.event.MyListenerEvent;
 import com.lijiayi.springbootpromedemo.metrics.PushGauge;
 import com.lijiayi.springbootpromedemo.metrics.PushHistogram;
 import com.lijiayi.springbootpromedemo.metrics.PushRequestCounter;
@@ -9,18 +10,16 @@ import com.lijiayi.springbootpromedemo.metrics.PushSummary;
 import com.lijiayi.springbootpromedemo.service.impl.TestServiceImpl;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.PushGateway;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-@Slf4j
+
 @RestController
 @RequestMapping("lijiayi")
 public class TestController {
@@ -44,11 +43,13 @@ public class TestController {
     @Autowired
     PushGauge pushGauge;
 
+    @Autowired
+    private ApplicationContext springApplication;
+
     // 测试采集
     @ResponseBody
     @GetMapping("/test1/{inc}")
     public String test(@PathVariable("inc") Double inc) {
-        log.info("---------------   进入test  -------------");
         JSONObject jsonObject = new JSONObject();
         pushGauge.gauge(inc);
         return JSONObject.toJSONString(jsonObject);
@@ -81,9 +82,9 @@ public class TestController {
     @ResponseBody
     @PostMapping("/webhook")
     public String webhook(@RequestBody String str) {
-        log.info("*************  " + str);
-        log.info("--------  alertmanager触发了webhook接口  -------------");
-        return "alertmanager触发了webhook接口";
+        ArthasProperties bean = applicationContext.getBean(ArthasProperties.class);
+        System.out.println("--------  alertmanager触发了webhook接口  new-------------");
+        return "alertmanager触发了webhook接口 new";
     }
 
     public Void a (){
@@ -95,22 +96,11 @@ public class TestController {
     @GetMapping("/testCounter")
 //    @MethodMetrics
     public String testCounter() {
-        log.info("---------------   进入8082 testCounter  -------------");
-        /*for (int i = 0; i < 180; i++) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("第 i 次， " + i);
-            counter.count("testCounter");
-        }*/
         return "8082 ok";
     }
 
     @GetMapping("send")
     public void send() {
-        log.info("定时任务 10s一次:{}", LocalDateTime.now().toString());
         try {
             Map<String, String> map = new HashMap<>();
             //
@@ -118,7 +108,6 @@ public class TestController {
             // 推送到pushGateway
             pushGateway.pushAdd(COLLECTOR_REGISTRY, "pushgateway", map);
         } catch (IOException e) {
-            log.error("推送异常", LocalDateTime.now().toString());
             e.printStackTrace();
         }
     }
