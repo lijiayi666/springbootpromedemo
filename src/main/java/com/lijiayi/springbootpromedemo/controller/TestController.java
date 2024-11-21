@@ -2,11 +2,13 @@ package com.lijiayi.springbootpromedemo.controller;
 
 import com.alibaba.arthas.spring.ArthasProperties;
 import com.alibaba.fastjson.JSONObject;
+import com.lijiayi.springbootpromedemo.entity.ScheduleEctity;
 import com.lijiayi.springbootpromedemo.event.MyListenerEvent;
 import com.lijiayi.springbootpromedemo.metrics.PushGauge;
 import com.lijiayi.springbootpromedemo.metrics.PushHistogram;
 import com.lijiayi.springbootpromedemo.metrics.PushRequestCounter;
 import com.lijiayi.springbootpromedemo.metrics.PushSummary;
+import com.lijiayi.springbootpromedemo.service.TestScheduleService;
 import com.lijiayi.springbootpromedemo.service.impl.TestServiceImpl;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.PushGateway;
@@ -45,6 +47,9 @@ public class TestController {
 
     @Autowired
     private ApplicationContext springApplication;
+
+    @Autowired
+    private TestScheduleService testScheduleService;
 
     // 测试采集
     @ResponseBody
@@ -120,6 +125,16 @@ public class TestController {
         System.out.println("塞入的name是:" + name);
         MyListenerEvent myListenerEvent = new MyListenerEvent(this, name);
         applicationContext.publishEvent(myListenerEvent);
+    }
+
+    @PostMapping("/addSchedule")
+    public void addSchedule(@RequestBody ScheduleEctity scheduleEctity) {
+        testScheduleService.addTask(scheduleEctity);
+    }
+
+    @PostMapping("/updateSchedule")
+    public void updateSchedule(@RequestBody ScheduleEctity scheduleEctity) {
+        testScheduleService.updateTask(scheduleEctity);
     }
 
 }
